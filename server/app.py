@@ -1,33 +1,19 @@
-#!/usr/bin/env python3
+from flask import Flask, jsonify
+from flask_restful import Api
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_cors import CORS
 
-from flask import request, session
-from flask_restful import Resource
-from sqlalchemy.exc import IntegrityError
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'your_secret_key'
+api = Api(app)
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+CORS(app)
 
-from config import app, db, api
-from models import User, Recipe
-
-class Signup(Resource):
-    pass
-
-class CheckSession(Resource):
-    pass
-
-class Login(Resource):
-    pass
-
-class Logout(Resource):
-    pass
-
-class RecipeIndex(Resource):
-    pass
-
-api.add_resource(Signup, '/signup', endpoint='signup')
-api.add_resource(CheckSession, '/check_session', endpoint='check_session')
-api.add_resource(Login, '/login', endpoint='login')
-api.add_resource(Logout, '/logout', endpoint='logout')
-api.add_resource(RecipeIndex, '/recipes', endpoint='recipes')
-
+# Import resource classes and add routes here
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(port=5000, debug=True)
